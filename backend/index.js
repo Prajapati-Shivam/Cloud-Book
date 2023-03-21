@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb://localhost:27017/cloud-book';
+const mongoURI = 'mongodb+srv://Shivam:Shivam@cloud-book.jvpxco6.mongodb.net/?retryWrites=true&w=majority';
 const express = require('express');
 
 mongoose.set('strictQuery', false);
@@ -7,9 +7,10 @@ mongoose.connect(mongoURI, () => {
   console.log('Connected to MongoDB');
 })
 
+const app = express();
+
 var cors = require('cors')
 
-const app = express();
 const port = 5000;
 
 app.use(cors())
