@@ -10,10 +10,12 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <Routes>
-            <Route path='/' exact element={<Home />} />
-            <Route path='/about' exact element={<About />} />
-          </Routes>
+          <div className="mx-14 my-10">
+            <Routes>
+              <Route path='/' exact element={<Home />} />
+              <Route path='/about' exact element={<About />} />
+            </Routes>
+          </div>
         </Router>
       </NoteState>
     </>
