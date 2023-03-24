@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import noteContext from '../context/notes/noteContext';
 
 const NoteItem = (props) => {
-  const { title, description, tag } = props.note;
+  const context = useContext(noteContext)
+  const { deleteNote } = context;
+  const { title, description, tag, _id } = props.note;
   return (
     <div className="lg:w-1/3">
       <div className=" bg-gray-100 m-4 bg-opacity-75 px-8 py-10 rounded-lg overflow-hidden text-center relative">
@@ -16,7 +19,7 @@ const NoteItem = (props) => {
         </p>
         <div className="flex justify-center py-5 gap-x-2 cursor-pointer">
           <i className="fa-solid fa-pen-to-square fa-lg"></i>
-          <i className="fa-solid fa-trash fa-lg"></i>
+          <i className="fa-solid fa-trash fa-lg" onClick={()=>deleteNote(_id)}></i>
         </div>
       </div>
     </div>
