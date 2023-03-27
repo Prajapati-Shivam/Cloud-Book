@@ -39,10 +39,10 @@ const NoteState = (props) => {
     setNotes(notes.concat(note))
   }
 
-  // Edit note
-  const editNote = async (id, title, description, tag) => {
+  // Update note
+  const updateNote = async (id, title, description, tag) => {
 
-    let url = `${host}/api/notes/fetchusernotes/${id}`
+    let url = `${host}/api/notes/updatenote/${id}`
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -53,25 +53,39 @@ const NoteState = (props) => {
     });
     const data = await response.json();
     console.log(data)
-
-    for (let i = 0; i < notes.length; i++) {
-      const note = notes[i];
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    for (let i = 0; i < newNotes.length; i++) {
+      const note = newNotes[i];
       if (note._id === id) {
-        note.title = title;
-        note.description = description;
-        note.tag = tag;
+        newNotes[i].title = title;
+        newNotes[i].description = description;
+        newNotes[i].tag = tag;
         break;
       }
     }
+    setNotes(newNotes)
   }
   // Delete note
-  const deleteNote = (id) => {
-    console.log('deleting note' + id)
-    const newNotes = notes.filter((note) => { return note._id !== id })
+  const deleteNote = async (id) => {
+
+    let url = `${host}/api/notes/deletenote/${id}`
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQxOWVjYjU4ZjlmNzNmNDg3Mjk3YmNjIn0sImlhdCI6MTY3OTUwMzkzMH0.jvoQy5G2fPky1IqFh4_kwXJn6y2r66-rGfvwCSlaaJw'
+      }
+    });
+    const data = await response.json();
+    console.log(data)
+
+    const newNotes = notes.filter((note) => { 
+      return note._id !== id 
+    })
     setNotes(newNotes)
   }
   return (
-    <NoteContext.Provider value={{ notes, getNotes, addNote, editNote, deleteNote }}>
+    <NoteContext.Provider value={{ notes, getNotes, addNote, updateNote, deleteNote }}>
       {props.children}
     </NoteContext.Provider>
   )

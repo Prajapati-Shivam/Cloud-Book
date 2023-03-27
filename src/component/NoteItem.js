@@ -4,22 +4,22 @@ import noteContext from '../context/notes/noteContext';
 const NoteItem = (props) => {
   const context = useContext(noteContext)
   const { deleteNote } = context;
-  const { title, description, tag, _id } = props.note;
+  const { note, editNote } = props;
   return (
     <div className="lg:w-1/3">
       <div className=" bg-gray-100 m-4 bg-opacity-75 px-8 py-10 rounded-lg overflow-hidden text-center relative">
         <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1 uppercase">
-          {tag}
+          {note.tag}
         </h2>
         <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 uppercase">
-          {title}
+          {note.title}
         </h1>
         <p className="leading-relaxed mb-3">
-          {description}
+          {note.description}
         </p>
         <div className="flex justify-center py-5 gap-x-2 cursor-pointer">
-          <i className="fa-solid fa-pen-to-square fa-lg"></i>
-          <i className="fa-solid fa-trash fa-lg" onClick={()=>deleteNote(_id)}></i>
+          <i className="fa-solid fa-pen-to-square fa-lg" onClick={()=>editNote(note)}></i>
+          <i className="fa-solid fa-trash fa-lg" onClick={()=>deleteNote(note._id)}></i>
         </div>
       </div>
     </div>
