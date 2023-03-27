@@ -3,10 +3,11 @@ import noteContext from '../context/notes/noteContext'
 const Addnote = () => {
   const context = useContext(noteContext)
   const { addNote } = context;
-  const [note, setNote] = useState({ title: "", description: "", tag: "Personal" })
+  const [note, setNote] = useState({ title: "", description: "", tag: "" })
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag);
+    addNote(note.title, note.description, note.tag = "Personal");
+    setNote({ title: "", description: "", tag: "" })
   }
 
   const handleChange = (e) => {
@@ -34,8 +35,10 @@ const Addnote = () => {
                 type="text"
                 id="title"
                 name="title"
+                value={note.title}
                 onChange={handleChange}
                 className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                required
               />
             </div>
           </div>
@@ -48,6 +51,7 @@ const Addnote = () => {
                 type="text"
                 id="tag"
                 name="tag"
+                value={note.tag}
                 onChange={handleChange}
                 className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -66,13 +70,15 @@ const Addnote = () => {
                 name="description"
                 onChange={handleChange}
                 className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                defaultValue={""}
+                value={note.description}
+                required
               />
             </div>
           </div>
           <div className="p-2 w-full">
             <button
-              className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              disabled={note.title.length < 3 || note.description.length < 3}
+              className={`${note.title.length < 3 || note.description.length < 3?'cursor-not-allowed':'cursor-pointer'} flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg`}
               onClick={handleSubmit}
             >
               + Add Note 

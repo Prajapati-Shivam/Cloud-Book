@@ -24,7 +24,6 @@ const Notes = () => {
     setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
   }
   const handleSubmit = (e) => {
-    e.preventDefault();
     updateNote(note.id, note.etitle, note.edescription, note.etag);
     setIsModalOpen(false);
   }
@@ -67,6 +66,7 @@ const Notes = () => {
                     value={note.etitle}
                     onChange={handleChange}
                     className="w-full  bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    required
                   />
                 </div>
               </div>
@@ -99,12 +99,14 @@ const Notes = () => {
                     onChange={handleChange}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     defaultValue={note.edescription}
+                    required
                   />
                 </div>
               </div>
               <div className="p-2 w-full">
                 <button
-                  className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded-md text-lg"
+                  disabled={note.etitle.length < 3 || note.edescription.length < 3}
+                  className={`${note.etitle.length < 3 || note.edescription.length < 3?'cursor-not-allowed':'cursor-pointer'}flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded-md text-lg`}
                   onClick={handleSubmit}
                 >
                   Edit Note
@@ -118,6 +120,7 @@ const Notes = () => {
       <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
         Your Notes
       </h1>
+      {notes.length === 0 && 'No notes to display. Try adding some notes.'}
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-10 mx-auto">
           <div className="flex flex-wrap -m-4">
