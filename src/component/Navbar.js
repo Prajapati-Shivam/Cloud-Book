@@ -1,8 +1,8 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const navItems = [
     {
       name: 'Home',
@@ -13,6 +13,11 @@ const Navbar = () => {
       path: '/about'
     }
   ]
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
   return (
     <nav className="text-gray-600 bg-blue-100 body-font">
       <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
@@ -33,16 +38,23 @@ const Navbar = () => {
             )
           })}
         </nav>
-        <Link
-          to='/login'
-          className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mr-2">
-          Login
-        </Link>
-        <Link
-          to='/signup'
-          className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          Sign Up
-        </Link>
+        {localStorage.getItem('token') ?
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+            Logout
+          </button> : <div className='flex gap-2'>
+            <Link
+              to='/login'
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+              Login
+            </Link>
+            <Link
+              to='/signup'
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+              Sign Up
+            </Link>
+          </div>}
       </div>
     </nav>
 

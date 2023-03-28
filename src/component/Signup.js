@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const Signup = () => {
     if (json.success) {
       //redirect
       localStorage.setItem('token', json.authToken);
-      window.location.href = "/";
+      navigate('/', { replace: true })
     } else {
       //show error
       alert(json.error)
