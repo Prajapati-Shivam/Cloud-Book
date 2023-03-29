@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import noteContext from '../context/notes/noteContext';
-
+// import {FiEdit2} from 'react-icons/fi';
+// import {FaEdit} from 'react-icons/fa';
 const NoteItem = (props) => {
   const context = useContext(noteContext)
   const { deleteNote } = context;

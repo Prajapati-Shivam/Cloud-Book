@@ -19,7 +19,7 @@ const Navbar = () => {
     navigate('/login');
   }
   return (
-    <nav className="text-gray-600 bg-blue-100 body-font">
+    <nav className="text-gray-600 bg-blue-100 body-font fixed top-0 w-full">
       <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
         <Link to='/' className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
           <span className='text-xl'>📖</span>
