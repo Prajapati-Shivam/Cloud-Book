@@ -16,6 +16,7 @@ const Notes = () => {
   const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "Personal" })
 
   useEffect(() => {
+    console.log(localStorage.getItem('name'))
     if (localStorage.getItem('token')) {
       getNotes();
     } else {
@@ -127,11 +128,13 @@ const Notes = () => {
       <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
         Your Notes
       </h1>
-      {notes.length === 0 && 'No notes to display. Try adding some notes.'}
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-10 mx-auto">
           <div className="flex flex-wrap -m-4">
-            {notes.map((note, index) => { return <NoteItem note={note} editNote={editNote} key={index} /> })}
+            {
+              notes.length === 0 ? 'No notes to display. Try adding some notes.' :
+              notes.map((note, index) => { return <NoteItem note={note} editNote={editNote} key={note._id} /> })
+            }
           </div>
         </div>
       </section>

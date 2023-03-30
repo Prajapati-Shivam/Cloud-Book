@@ -3,8 +3,8 @@ import React from 'react'
 const About = () => {
   return (
     <div className='container'>
-      <h2 className='text-3xl font-bold mb-4'>About CloudBoook</h2>
-      <ul className='italic list-disc text-xl flex flex-col gap-y-4 mt-10'>
+      <h2 className='text-2xl sm:text-3xl font-bold mb-4 sm:mb-10'>About CloudBoook</h2>
+      <ul className='italic list-disc text-lg sm:text-xl flex flex-col gap-y-4 p-4'>
         <li>
           <span className='font-semibold'>CloudBook</span> is a simple note-taking application built using MongoDB and Express. With CloudBook, users can easily <span className='font-semibold'>create, update, and delete notes.</span>
         </li>

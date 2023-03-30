@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import login from '../asset/loginGif.gif';
 const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" })
@@ -31,8 +32,8 @@ const Login = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
   return (
-    <section className="text-gray-600 body-font relative border-2 w-full mx-auto">
-      <div className="container px-5 py-10">
+    <section className="text-black sm:text-gray-600 body-font w-full flex flex-col sm:flex-row justify-center items-center overflow-y-hidden">
+      <div className="z-10 sm:mr-40">
         <div className="flex flex-col w-full mb-10">
           <h1 className="sm:text-3xl text-2xl text-center font-medium title-font mb-4 text-gray-900">
             Login
@@ -45,7 +46,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className='mx-auto'>
             <div className="p-2 w-full">
               <div className="relative">
-                <label htmlFor="email" className="leading-7 text-md text-gray-600">
+                <label htmlFor="email" className="leading-7 text-md text-black sm:text-gray-600">
                   Email
                 </label>
                 <input
@@ -61,7 +62,7 @@ const Login = () => {
             </div>
             <div className="p-2 w-full">
               <div className="relative">
-                <label htmlFor="password" className="leading-7 text-md text-gray-600">
+                <label htmlFor="password" className="leading-7 text-md text-black sm:text-gray-600">
                   Password
                 </label>
                 <input
@@ -77,16 +78,22 @@ const Login = () => {
             </div>
 
             <div className="p-2 w-full">
+              Don't have an account?
+              <Link to='/signup' className="text-indigo-500 ml-2 cursor-pointer">
+                Sign Up
+              </Link>
+            </div>
+            <div className="p-2 w-full">
               <button
-                className={`flex mx-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded hover:rounded-full transition duration-300 text-lg`}
+                className={`flex mx-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-md hover:rounded-full transition-all ease-in-out duration-300 text-lg`}
               >
                 Submit
               </button>
             </div>
           </form>
         </div>
-
       </div>
+      <img src={login} alt="login" className='max-w-[85%] opacity-50 sm:w-[50%] absolute md:top-20 lg:top-0 sm:right-20 sm:opacity-100' />
     </section>
   )
 }

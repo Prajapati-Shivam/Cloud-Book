@@ -11,8 +11,8 @@ function App() {
     <>
       <NoteState>
         <Router>
-          <Navbar />
-          <div className="mx-14 my-10">
+          {localStorage.getItem('token')?<Navbar />:<div className='text-2xl sm:text-3xl font-semibold text-center mt-5 w-full absolute top-0 z-10'>Welcome to Cloud Book!</div>}
+          <div className="mx-4 sm:mx-14 mt-14 sm:mt-28 mb-5">
             <Routes>
               <Route path='/' exact element={<Home />} />
               <Route path='/about' exact element={<About />} />

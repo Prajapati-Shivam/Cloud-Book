@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import noteContext from '../context/notes/noteContext';
-// import {FiEdit2} from 'react-icons/fi';
-// import {FaEdit} from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 const NoteItem = (props) => {
   const context = useContext(noteContext)
   const { deleteNote } = context;
@@ -19,8 +18,9 @@ const NoteItem = (props) => {
           {note.description}
         </p>
         <div className="flex justify-center py-5 gap-x-2 cursor-pointer">
-          <i className="fa-solid fa-pen-to-square fa-lg" onClick={()=>editNote(note)}></i>
-          <i className="fa-solid fa-trash fa-lg" onClick={()=>deleteNote(note._id)}></i>
+          {/* <i className="fa-solid fa-pen-to-square fa-lg" onClick={()=>editNote(note)}></i> */}
+          <FaEdit onClick={() => editNote(note)} className='text-2xl' />
+          <FaTrash onClick={() => deleteNote(note._id)} className='text-2xl' />
         </div>
       </div>
     </div>

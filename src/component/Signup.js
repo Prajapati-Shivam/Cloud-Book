@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import signupGif from '../asset/signupGif.gif';
 const Signup = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
@@ -20,6 +20,7 @@ const Signup = () => {
     console.log(json)
     if (json.success) {
       //redirect
+      console.log(json.authToken)
       localStorage.setItem('token', json.authToken);
       navigate('/', { replace: true })
     } else {
@@ -32,8 +33,8 @@ const Signup = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
   return (
-    <section className="text-gray-600 body-font relative border-2 w-full mx-auto">
-      <div className="container px-5 py-10">
+    <section className="text-gray-600 body-font w-full flex flex-col sm:flex-row justify-center items-center ">
+      <div className="z-10 sm:mr-40">
         <div className="flex flex-col w-full mb-10">
           <h1 className="sm:text-3xl text-2xl text-center font-medium title-font mb-4 text-gray-900">
             Sign Up
@@ -94,22 +95,12 @@ const Signup = () => {
                 />
               </div>
             </div>
+
             <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="cpassword" className="leading-7 text-md text-gray-600">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="cpassword"
-                  name="cpassword"
-                  minLength={5}
-                  value={credentials.cpassword}
-                  onChange={onChange}
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  required
-                />
-              </div>
+              Already have an account?
+              <Link to='/login' className="text-indigo-500 ml-2 cursor-pointer">
+                Log in
+              </Link>
             </div>
 
             <div className="p-2 w-full">
@@ -123,6 +114,7 @@ const Signup = () => {
         </div>
 
       </div>
+      <img src={signupGif} alt="login" className='max-w-[85%] opacity-50 sm:w-[50%] absolute md:top-20 lg:top-0 sm:right-20 sm:opacity-100' />
     </section>
   )
 }
