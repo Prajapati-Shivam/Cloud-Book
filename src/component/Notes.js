@@ -16,13 +16,11 @@ const Notes = () => {
   const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "Personal" })
 
   useEffect(() => {
-    console.log(localStorage.getItem('name'))
     if (localStorage.getItem('token')) {
       getNotes();
     } else {
       navigate('/login');
     }
-    // getNotes();
     // eslint-disable-next-line 
   }, [])
 

@@ -17,12 +17,10 @@ const Signup = () => {
       body: JSON.stringify({ name, email, password })
     });
     const json = await response.json();
-    console.log(json)
     if (json.success) {
       //redirect
-      console.log(json.authToken)
-      localStorage.setItem('token', json.authToken);
-      navigate('/', { replace: true })
+      localStorage.setItem('token', json.authtoken);
+      navigate('/')
     } else {
       //show error
       alert(json.error)
