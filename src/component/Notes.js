@@ -38,7 +38,6 @@ const Notes = () => {
     setNote({ ...note, [e.target.name]: e.target.value })
   }
 
-  // key={note.id} change in future
   return (
     <div className="flex flex-col text-center w-full mb-12">
       <AddNote />

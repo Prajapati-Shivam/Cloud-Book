@@ -12,7 +12,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <div className="mx-4 sm:mx-14 mt-14 sm:mt-28 mb-5">
+          <div className="mx-4 sm:mx-14 mt-28">
             <Routes>
               <Route path='/' exact element={<Home />} />
               <Route path='/about' exact element={<About />} />

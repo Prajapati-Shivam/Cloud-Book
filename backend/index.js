@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
-require('dotenv').config()
-const mongoURI = 'mongodb+srv://Shivam:Shivam@cloud-book.jvpxco6.mongodb.net/?retryWrites=true&w=majority'
+require('dotenv').config();
 const express = require('express');
-
 mongoose.set('strictQuery', false);
-mongoose.connect(mongoURI, () => {
+mongoose.connect(process.env.REACT_APP_MONGO_URI, () => {
   console.log('Connected to MongoDB');
 })
-console.log(process.env.MONGO_URI)
-
 const app = express();
 
 var cors = require('cors')

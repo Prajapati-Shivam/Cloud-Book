@@ -20,7 +20,7 @@ const Signup = () => {
     if (json.success) {
       //redirect
       localStorage.setItem('token', json.authtoken);
-      navigate('/')
+      navigate('/', { replace: true })
     } else {
       //show error
       alert(json.error)
@@ -112,7 +112,7 @@ const Signup = () => {
         </div>
 
       </div>
-      <img src={signupGif} alt="login" className='max-w-[85%] opacity-50 sm:w-[50%] absolute md:top-20 lg:top-0 sm:right-20 sm:opacity-100' />
+      <img src={signupGif} alt="login" className='opacity-50 sm:w-[50%] absolute md:top-20 lg:top-0 sm:right-20 sm:opacity-100' />
     </section>
   )
 }

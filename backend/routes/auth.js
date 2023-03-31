@@ -5,8 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router();
-
-const JWT_SECRET = 'shivam'
 // ROUTE 1: Create a user 
 // POST '/api/auth/createuser'
 router.post('/createuser', [
@@ -36,7 +34,7 @@ router.post('/createuser', [
       id: user.id
     }
   }
-  const authtoken = jwt.sign(data, JWT_SECRET)
+  const authtoken = jwt.sign(data, process.env.REACT_APP_JWT_SECRET)
   success = true;
   res.json({ success, authtoken })
 })
@@ -70,7 +68,7 @@ router.post('/login', [
         id: user.id
       }
     }
-    const authtoken = jwt.sign(data, JWT_SECRET)
+    const authtoken = jwt.sign(data, process.env.REACT_APP_JWT_SECRET)
     success = true;
     res.json({ success, authtoken })
   }
