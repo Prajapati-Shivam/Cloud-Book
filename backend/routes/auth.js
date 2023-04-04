@@ -53,12 +53,12 @@ router.post('/login', [
 ], async (req, res) => {
   let success = false;
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
-
-  const { email, password } = req.body;
   try {
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+  
+    const { email, password } = req.body;
     let user = await User.findOne({ email })
     if (!user) {
       return res.status(400).json({ success, error: "Try to login with correct credentials" })
