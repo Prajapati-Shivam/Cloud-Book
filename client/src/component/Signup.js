@@ -7,7 +7,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const host = "http://localhost:5000";
+    const host = "https://shy-pear-pleat.cyclic.app";
     let url = `${host}/api/auth/createuser`
     const response = await fetch(url, {
       method: 'POST',
