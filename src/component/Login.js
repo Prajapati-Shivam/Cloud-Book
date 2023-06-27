@@ -6,7 +6,7 @@ const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" })
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const host = process.env.PORT;
+    const host = "https://lively-puce-flip-flops.cyclic.app"
     let url = `${host}/api/auth/login`;
     
     try {

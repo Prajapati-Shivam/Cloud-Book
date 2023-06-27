@@ -7,7 +7,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const host = process.env.PORT;
+    const host = "https://lively-puce-flip-flops.cyclic.app"
     let url = `${host}/api/auth/createuser`;
   
     try {
