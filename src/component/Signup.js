@@ -7,7 +7,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const host = process.env.REACT_APP_PORT;
+    const host = process.env.PORT;
     let url = `${host}/api/auth/createuser`
     const response = await fetch(url, {
       method: 'POST',
