@@ -8,9 +8,9 @@ const router = express.Router();
 // ROUTE 1: Create a user 
 // POST '/api/auth/createuser'
 router.post('/createuser', [
-  body('name', 'Enter a valid name').isLength({ min: 5 }),
+  body('name', 'Enter a valid name').exists(),
   body('email', 'Enter a valid email').isEmail(),
-  body('password', 'Enter a valid password').isLength({ min: 5 }),
+  body('password', 'Enter a valid password').exists(),
 ], async (req, res) => {
   let success = false;
   const errors = validationResult(req);
