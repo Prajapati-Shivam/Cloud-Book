@@ -8,24 +8,50 @@ const Signup = () => {
     e.preventDefault();
     const { name, email, password } = credentials;
     const host = process.env.PORT;
-    let url = `${host}/api/auth/createuser`
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, password })
-    });
-    const json = await response.json();
-    if (json.success) {
-      //redirect
-      localStorage.setItem('token', json.authtoken);
-      navigate('/', { replace: true })
-    } else {
-      //show error
-      alert(json.error)
+    let url = `${host}/api/auth/createuser`;
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+  
+      if (!response.ok) {
+        // Handle the error if the response is not successful
+        throw new Error('Request failed with status ' + response.status);
+      }
+  
+      const text = await response.text();
+      let json = {};
+      try {
+        json = JSON.parse(text);
+      } catch (error) {
+        // Handle JSON parse error
+        throw new Error('Invalid JSON response');
+      }
+  
+      if (Object.keys(json).length === 0) {
+        // Handle empty response
+        throw new Error('Empty response');
+      }
+  
+      if (json.success) {
+        // Redirect
+        localStorage.setItem('token', json.authtoken);
+        navigate('/', { replace: true });
+      } else {
+        // Show error
+        alert(json.error);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      // Handle the error appropriately
     }
-  }
+  };
+  
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })

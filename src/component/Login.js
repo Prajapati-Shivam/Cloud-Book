@@ -5,27 +5,46 @@ const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" })
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     const host = process.env.PORT;
-    let url = `${host}/api/auth/login`
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: credentials.email, password: credentials.password })
-    });
-    const json = await response.json();
-    if (json.success) {
-      //redirect
-      localStorage.setItem('token', json.authtoken);
-      navigate('/', { replace: true })
-    } else {
-      //show error
-      alert("Invalid Credentials")
+    let url = `${host}/api/auth/login`;
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: credentials.email, password: credentials.password })
+      });
+  
+      if (!response.ok) {
+        // Handle the error if the response is not successful
+        throw new Error('Request failed with status ' + response.status);
+      }
+  
+      const json = await response.json();
+  
+      if (Object.keys(json).length === 0) {
+        // Handle empty response
+        throw new Error('Empty response');
+      }
+  
+      if (json.success) {
+        //redirect
+        localStorage.setItem('token', json.authtoken);
+        navigate('/', { replace: true })
+      } else {
+        //show error
+        alert("Invalid Credentials")
+      }
+  
+    } catch (error) {
+      console.error('Error:', error.message);
+      // Handle the error appropriately
     }
-  }
+  };
+  
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
