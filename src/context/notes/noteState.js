@@ -2,89 +2,110 @@ import { useState } from "react";
 import NoteContext from "./noteContext";
 
 const NoteState = (props) => {
-  const host = "https://lively-puce-flip-flops.cyclic.app"
-  const notesInitial = []
+  const host = "https://lively-puce-flip-flops.cyclic.app";
+  const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [note, setNote] = useState({
+    id: "",
+    etitle: "",
+    edescription: "",
+    etag: "Personal",
+  });
 
   // Get all note
   const getNotes = async () => {
-    let url = `${host}/api/notes/fetchallnotes`
+    let url = `${host}/api/notes/fetchallnotes`;
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token')
-      }
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
     });
     const data = await response.json();
     setNotes(data);
-  }
+  };
 
   // Add note
   const addNote = async (title, description, tag) => {
-    let url = `${host}/api/notes/createnote`
+    let url = `${host}/api/notes/createnote`;
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token')
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag })
+      body: JSON.stringify({ title, description, tag }),
     });
     const note = await response.json();
-    setNotes(notes.concat(note))
-  }
+    setNotes((prevNotes) => [...prevNotes, note]);
+  };
 
   // Update note
   const updateNote = async (id, title, description, tag) => {
-
-    let url = `${host}/api/notes/updatenote/${id}`
+    let url = `${host}/api/notes/updatenote/${id}`;
     const response = await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token')
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag })
+      body: JSON.stringify({ title, description, tag }),
     });
     const data = await response.json();
-    console.log(data)
-    let newNotes = JSON.parse(JSON.stringify(notes));
-    for (let i = 0; i < newNotes.length; i++) {
-      const note = newNotes[i];
-      if (note._id === id) {
-        newNotes[i].title = title;
-        newNotes[i].description = description;
-        newNotes[i].tag = tag;
-        break;
-      }
-    }
-    setNotes(newNotes)
-  }
+    console.log(data);
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note._id === id ? { ...note, title, description, tag } : note
+      )
+    );
+  };
+
   // Delete note
   const deleteNote = async (id) => {
-
-    let url = `${host}/api/notes/deletenote/${id}`
+    let url = `${host}/api/notes/deletenote/${id}`;
     const response = await fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token')
-      }
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
     });
     const data = await response.json();
-    console.log(data)
+    console.log(data);
+    setNotes((prevNotes) => prevNotes.filter((note) => note._id !== id));
+  };
 
-    const newNotes = notes.filter((note) => { 
-      return note._id !== id 
-    })
-    setNotes(newNotes)
-  }
+  const editNote = (currentNote) => {
+    setIsModalOpen(true);
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
+  };
+
   return (
-    <NoteContext.Provider value={{ notes, getNotes, addNote, updateNote, deleteNote }}>
+    <NoteContext.Provider
+      value={{
+        notes,
+        getNotes,
+        addNote,
+        updateNote,
+        deleteNote,
+        editNote,
+        note,
+        setNote,
+        isModalOpen,
+        setIsModalOpen,
+      }}
+    >
       {props.children}
     </NoteContext.Provider>
-  )
-}
+  );
+};
 
 export default NoteState;
