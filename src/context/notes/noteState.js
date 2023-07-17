@@ -5,7 +5,8 @@ const NoteState = (props) => {
   const host = "https://lively-puce-flip-flops.cyclic.app";
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
   const [note, setNote] = useState({
     id: "",
@@ -79,7 +80,7 @@ const NoteState = (props) => {
   };
 
   const editNote = (currentNote) => {
-    setIsModalOpen(true);
+    setUpdateModalOpen(true);
     setNote({
       id: currentNote._id,
       etitle: currentNote.title,
@@ -99,8 +100,10 @@ const NoteState = (props) => {
         editNote,
         note,
         setNote,
-        isModalOpen,
-        setIsModalOpen,
+        addModalOpen,
+        setAddModalOpen,
+        updateModalOpen,
+        setUpdateModalOpen,
       }}
     >
       {props.children}

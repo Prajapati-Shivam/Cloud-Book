@@ -4,12 +4,12 @@ import noteContext from "../context/notes/noteContext";
 
 const Update = () => {
   const context = useContext(noteContext);
-  const { updateNote, note, setNote, isModalOpen, setIsModalOpen } = context;
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const { updateNote, note, setNote, updateModalOpen, setUpdateModalOpen } = context;
+  const handleOpenModal = () => setUpdateModalOpen(true);
+  const handleCloseModal = () => setUpdateModalOpen(false);
   const handleSubmit = (e) => {
     updateNote(note.id, note.etitle, note.edescription, note.etag);
-    setIsModalOpen(false);
+    setUpdateModalOpen(false);
   };
 
   const handleChange = (e) => {
@@ -21,16 +21,16 @@ const Update = () => {
       <button className="hidden" onClick={handleOpenModal}>
         Open Modal
       </button>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <div className="container p-5">
-          <div className="flex justify-between w-full mb-4">
-            <h1 className="sm:text-2xl text-xl font-medium title-font text-gray-900">
+      <Modal isOpen={updateModalOpen} onClose={handleCloseModal}>
+        <div className="container p-2 sm:p-5">
+          <div className="flex justify-between items-center w-full mb-4">
+            <h2 className="sm:text-2xl text-xl font-medium title-font text-gray-900">
               Edit Note
-            </h1>
+            </h2>
 
             <button
               type="button"
-              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-400 hover:text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-400 hover:text-white focus:outline-none sm:mt-0 sm:ml-3 sm:text-sm"
               onClick={handleCloseModal}
             >
               Close

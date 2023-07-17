@@ -1,53 +1,105 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import noteContext from "../context/notes/noteContext";
+import { FaHome, FaInfoCircle } from "react-icons/fa";
+import { BiLogOut } from "react-icons/bi";
+import { MdNoteAdd } from "react-icons/md";
+import { useContext } from "react";
 
 const Navbar = () => {
+  const context = useContext(noteContext)
+  const { setAddModalOpen } = context;
   const location = useLocation();
   const navigate = useNavigate();
   const navItems = [
     {
-      name: 'Home',
-      path: '/'
+      name: "Home",
+      logo: <FaHome />,
+      path: "/",
     },
     {
-      name: 'About',
-      path: '/about'
-    }
-  ]
+      name: "Add Note",
+      logo: <MdNoteAdd />,
+      path: "/",
+    },
+    {
+      name: "About",
+      logo: <FaInfoCircle />,
+      path: "/about",
+    },
+  ];
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  }
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
-    <nav className="text-gray-600 bg-white shadow-md z-10 body-font fixed top-0 w-full flex items-center">
-      <div className="container mx-auto flex flex-wrap p-4 flex-col sm:flex-row">
-        <Link to='/' className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <span className='text-xl'>📖</span>
-          <span className="ml-3 text-xl">CloudBook</span>
-        </Link>
-        <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-          {navItems.map((item, index) => {
-            return (
-              <Link
-                to={item.path}
-                key={index}
-                className={`mr-5 text-gray text-md hover:text-gray-900 ${location.pathname === item.path ? 'font-medium text-black' : ''}`}
-              >
-                {item.name}
-              </Link>
-            )
-          })}
-        </nav>
-        {localStorage.getItem('token') &&
-          <button
-            onClick={handleLogout}
-            className="inline-flex text-center items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
-            Logout
-          </button>}
+    <div className="flex justify-between items-center h-16 bg-white text-black relative shadow-sm px-2 sm:px-8 md:px-16">
+      <Link to="/">
+        <span className="font-bold text-xl tracking-tight">CloudBook</span>
+      </Link>
+      <div className="sm:block hidden">
+        <div className="flex justify-between items-center">
+          {navItems.map((item) => (
+            <Link
+              to={item.path}
+              key={item.name}
+              onClick={() => {
+                if (item.name === "Add Note") {
+                  setAddModalOpen(true);
+                }
+              }}
+              className={`${
+                location.pathname === item.path
+                  ? "text-gray-900"
+                  : "text-gray-500"
+              } hover:text-gray-900 font-medium pr-4 text-md flex item-center`}
+            >
+              <span className="text-2xl mr-1">{item.logo}</span>
+              <span>{item.name}</span>
+            </Link>
+          ))}
+          {localStorage.getItem("token") && (
+            <button
+              onClick={handleLogout}
+              className="inline-flex text-center items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-md font-medium"
+            >
+              Logout
+            </button>
+          )}
+        </div>
       </div>
-    </nav>
+      <div className="block sm:hidden">
+        <div className="flex justify-between items-center">
+          {navItems.map((item) => (
+            <Link
+              to={item.path}
+              key={item.name}
+              onClick={() => {
+                if (item.name === "Add Note") {
+                  setAddModalOpen(true);
+                }
+              }}
+              className={`${
+                location.pathname === item.path
+                  ? "text-gray-900"
+                  : "text-gray-500"
+              } hover:text-gray-900 font-medium pr-4 text-xl`}
+            >
+              {item.logo}
+            </Link>
+          ))}
+          {localStorage.getItem("token") && (
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center 0 text-2xl"
+            >
+              <BiLogOut />
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  )
-}
-
-export default Navbar
+export default Navbar;
