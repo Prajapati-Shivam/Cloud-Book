@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import Modal from "./Modal";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const Addnote = () => {
   const context = useContext(noteContext);
@@ -27,16 +28,15 @@ const Addnote = () => {
       <Modal isOpen={addModalOpen} onClose={handleCloseModal}>
         <div className="container p-2 sm:p-5">
           <div className="flex justify-between items-center w-full mb-4">
-            <h2 className="sm:text-2xl text-xl font-medium title-font text-gray-900">
+            <h2 className="sm:text-2xl text-xl font-bold title-font text-gray-900">
               Add Note
             </h2>
-
             <button
               type="button"
-              className="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-400 hover:text-white focus:outline-none sm:mt-0 sm:ml-3 sm:text-sm"
+              className="w-auto inline-flex justify-center rounded-full font-bold text-gray-700 hover:bg-red-500 hover:text-white sm:ml-3 sm:text-sm"
               onClick={handleCloseModal}
             >
-              Close
+              <AiOutlineCloseCircle className="text-3xl" />
             </button>
           </div>
           <div className="mx-auto">
@@ -55,7 +55,7 @@ const Addnote = () => {
                     name="title"
                     value={note.title}
                     onChange={handleChange}
-                    className="w-full  bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className="w-full bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     required
                   />
                 </div>
@@ -74,7 +74,7 @@ const Addnote = () => {
                     name="tag"
                     value={note.tag}
                     onChange={handleChange}
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className="w-full  bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
               </div>
@@ -90,7 +90,7 @@ const Addnote = () => {
                     id="desc"
                     name="description"
                     onChange={handleChange}
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    className="w-full bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     defaultValue={note.description}
                     required
                   />
@@ -105,7 +105,7 @@ const Addnote = () => {
                     note.title.length < 3 || note.description.length < 3
                       ? "cursor-not-allowed"
                       : "cursor-pointer"
-                  }flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded-md text-lg`}
+                  } flex text-black border border-black py-2 px-4 focus:outline-none hover:bg-black hover:text-white rounded-md text-lg font-semibold transition-colors duration-300`}
                   onClick={handleSubmit}
                 >
                   Add Note

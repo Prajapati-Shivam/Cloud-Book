@@ -31,7 +31,7 @@ const Notes = () => {
           <div className="flex flex-wrap gap-4">
             {
               notes.length === 0 ? 'No notes to display. Try adding some notes.' :
-              notes.map((note, index) => { return <NoteItem note={note} key={note._id} /> })
+              notes.map((note, index) => { return <NoteItem note={note} key={note._id} /> }).reverse()
             }
           </div>
         </div>

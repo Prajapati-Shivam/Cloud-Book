@@ -27,7 +27,7 @@ const NoteItem = (props) => {
           {note.title}
         </h1>
         {click && (
-          <p className="leading-relaxed mb-3 transition-all duration-300">
+          <p className="leading-relaxed text-md mb-3">
             {note.description}
           </p>
         )}

@@ -1,146 +1,139 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import signupGif from '../asset/signupGif.gif';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import signupGif from "../asset/signupGif.gif";
 const Signup = () => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const host = "https://lively-puce-flip-flops.cyclic.app"
+    const host = "https://lively-puce-flip-flops.cyclic.app";
     let url = `${host}/api/auth/createuser`;
-  
+
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password }),
       });
-  
+
       if (!response.ok) {
         // Handle the error if the response is not successful
-        throw new Error('Request failed with status ' + response.status);
+        throw new Error("Request failed with status " + response.status);
       }
-  
-      const text = await response.text();
-      let json = {};
-      try {
-        json = JSON.parse(text);
-      } catch (error) {
-        // Handle JSON parse error
-        throw new Error('Invalid JSON response');
-      }
-  
-      if (Object.keys(json).length === 0) {
-        // Handle empty response
-        throw new Error('Empty response');
-      }
-  
-      if (json.success) {
-        // Redirect
-        localStorage.setItem('token', json.authtoken);
-        navigate('/', { replace: true });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("token", data.authtoken);
+        navigate("/", { replace: true });
       } else {
-        // Show error
-        alert(json.error);
+        throw new Error(data.error);
       }
     } catch (error) {
-      console.error('Error:', error.message);
-      // Handle the error appropriately
+      console.error("Error:", error.message);
     }
   };
-  
 
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-  }
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
   return (
-    <section className="text-gray-600 body-font w-full flex flex-col sm:flex-row justify-center items-center ">
-      <div className="z-10 sm:mr-40">
-        <div className="flex flex-col w-full mb-10">
-          <h1 className="sm:text-3xl text-2xl text-center font-medium title-font mb-4 text-gray-900">
+    <section className="text-black px-2 body-font h-[calc(100vh-10rem)] sm:h-[calc(100vh-15rem)] w-full flex justify-center items-center">
+      <img src={signupGif} alt="login" className="hidden lg:block" />
+      <div className="z-10 border border-black rounded-md p-4 sm:p-6">
+        <div className="flex flex-col w-full mb-4">
+          <h2 className="sm:text-3xl text-2xl text-center font-medium title-font mb-4 text-gray-900">
             Sign Up
-          </h1>
-          <p className="mx-auto leading-relaxed text-base">
+          </h2>
+          <p className="mx-auto text-center text-gray-600 leading-relaxed text-base">
             Create an account to start saving your notes.
           </p>
         </div>
-        <div className="flex flex-wrap mx-auto -m-2">
-          <form onSubmit={handleSubmit} className='mx-auto'>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="name" className="leading-7 text-md text-gray-600">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  minLength={5}
-                  value={credentials.name}
-                  onChange={onChange}
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  required
-                />
-              </div>
+        <form onSubmit={handleSubmit}>
+          <div className="w-full mb-2 sm:mb-4">
+            <div className="relative">
+              <label htmlFor="name" className="leading-7 text-md text-gray-600">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                minLength={5}
+                value={credentials.name}
+                onChange={onChange}
+                className="w-full  bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                required
+              />
             </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="email" className="leading-7 text-md text-gray-600">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={credentials.email}
-                  onChange={onChange}
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  required
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="password" className="leading-7 text-md text-gray-600">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  minLength={5}
-                  value={credentials.password}
-                  onChange={onChange}
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="p-2 w-full">
-              Already have an account?
-              <Link to='/login' className="text-indigo-500 ml-2 cursor-pointer">
-                Log in
-              </Link>
-            </div>
-
-            <div className="p-2 w-full">
-              <button
-                className={`flex mx-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded hover:rounded-full transition duration-300 text-lg`}
+          </div>
+          <div className="w-full mb-2 sm:mb-4">
+            <div className="relative">
+              <label
+                htmlFor="email"
+                className="leading-7 text-md text-gray-600"
               >
-                Submit
-              </button>
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={credentials.email}
+                onChange={onChange}
+                className="w-full  bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                required
+              />
             </div>
-          </form>
-        </div>
+          </div>
+          <div className="w-full mb-2 sm:mb-4">
+            <div className="relative">
+              <label
+                htmlFor="password"
+                className="leading-7 text-md text-gray-600"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                minLength={5}
+                value={credentials.password}
+                onChange={onChange}
+                className="w-full  bg-opacity-50 rounded border border-gray-300 focus:bg-gray-100 hover:border-black text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                required
+              />
+            </div>
+          </div>
 
+          <div className="w-full mb-2">
+            Already have an account?
+            <Link to="/login" className="text-indigo-500 ml-2 cursor-pointer">
+              Log in
+            </Link>
+          </div>
+
+          <div className="w-full mt-4">
+            <button className="flex text-black mx-auto border border-black py-1 px-3 focus:outline-none hover:bg-black hover:text-white rounded-md text-lg font-semibold transition-colors duration-300">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-      <img src={signupGif} alt="login" className='opacity-50 sm:w-[50%] absolute md:top-20 lg:top-0 sm:right-20 sm:opacity-100' />
     </section>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
