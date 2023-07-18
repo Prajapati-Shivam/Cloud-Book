@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import noteContext from "../context/notes/noteContext";
 import { Link, useNavigate } from "react-router-dom";
 import signupGif from "../asset/signupGif.gif";
 const Signup = () => {
@@ -8,6 +9,9 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const context = useContext(noteContext)
+  const { setUserName } = context;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
@@ -32,6 +36,7 @@ const Signup = () => {
 
       if (data.success) {
         localStorage.setItem("token", data.authtoken);
+        setUserName(credentials.name);
         navigate("/", { replace: true });
       } else {
         throw new Error(data.error);

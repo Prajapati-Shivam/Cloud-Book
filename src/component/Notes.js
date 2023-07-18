@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import noteContext from '../context/notes/noteContext';
-import NoteItem from './NoteItem';
-import AddNote from './AddNote';
-import { useNavigate } from 'react-router-dom';
-import Update from './Update';
+import React, { useContext, useEffect } from "react";
+import noteContext from "../context/notes/noteContext";
+import NoteItem from "./NoteItem";
+import AddNote from "./AddNote";
+import { useNavigate } from "react-router-dom";
+import Update from "./Update";
+import nodata from "../asset/nodata.svg";
 
 const Notes = () => {
   const navigate = useNavigate();
@@ -11,13 +12,13 @@ const Notes = () => {
   const { notes, getNotes } = context;
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       getNotes();
     } else {
-      navigate('/login');
+      navigate("/login");
     }
-    // eslint-disable-next-line 
-  }, [])
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="flex flex-col w-full">
@@ -28,16 +29,26 @@ const Notes = () => {
       </h1>
       <section className="text-gray-600 body-font">
         <div className="container">
-          <div className="flex flex-wrap gap-4">
-            {
-              notes.length === 0 ? 'No notes to display. Try adding some notes.' :
-              notes.map((note, index) => { return <NoteItem note={note} key={note._id} /> }).reverse()
-            }
+          <div className="flex flex-wrap gap-4 flex-col items-center">
+            {notes.length === 0
+              ? "No notes to display. Try adding some notes."
+              : notes
+                  .map((note, index) => {
+                    return <NoteItem note={note} key={note._id} />;
+                  })
+                  .reverse()}
+            {notes.length === 0 && (
+              <img
+                src={nodata}
+                alt="nodata"
+                className="flex items-center justify-center w-52"
+              />
+            )}
           </div>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Notes
+export default Notes;

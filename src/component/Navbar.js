@@ -4,6 +4,8 @@ import { FaHome, FaInfoCircle } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { MdNoteAdd } from "react-icons/md";
 import { useContext } from "react";
+import logo from "../asset/logo.png";
+import onlyLogo from "../asset/onlyLogo.png";
 
 const Navbar = () => {
   const context = useContext(noteContext)
@@ -35,7 +37,12 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center h-16 bg-white text-black relative shadow-sm px-2 sm:px-8 md:px-16">
       <Link to="/">
-        <span className="font-bold text-xl tracking-tight">CloudBook</span>
+        <span className="font-bold text-xl tracking-tight hidden sm:block">
+          <img src={logo} alt="CloudBook" className="w-40" />
+        </span>
+        <span className="font-bold text-xl tracking-tight sm:hidden">
+          <img src={onlyLogo} alt="CloudBook" className="w-10" />
+        </span>
       </Link>
       <div className="sm:block hidden">
         <div className="flex justify-between items-center">
