@@ -28,24 +28,25 @@ const Notes = () => {
         Your Notes
       </h1>
       <section className="text-gray-600 body-font">
-        <div className="container">
           <div className="flex flex-wrap gap-4 flex-col items-center">
-            {notes.length === 0
-              ? "No notes to display. Try adding some notes."
-              : notes
-                  .map((note, index) => {
-                    return <NoteItem note={note} key={note._id} />;
-                  })
-                  .reverse()}
             {notes.length === 0 && (
-              <img
-                src={nodata}
-                alt="nodata"
-                className="flex items-center justify-center w-52"
-              />
+              <div className="flex flex-col item-center">
+                <p className="text-lg font-medium text-gray-700 mb-3">
+                  No notes to display 😔. Try adding some notes.
+                </p>
+                <img src={nodata} alt="nodata" className="w-52 mx-auto" />
+              </div>
             )}
           </div>
-        </div>
+          <div className="flex flex-wrap gap-4">
+            {notes.length !== 0 && (
+              <>
+                {notes.map((note) => {
+                  return <NoteItem key={note._id} note={note} />;
+                })}
+              </>
+            )}
+          </div>
       </section>
     </div>
   );
