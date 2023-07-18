@@ -61,8 +61,9 @@ const Navbar = () => {
           {localStorage.getItem("token") && (
             <button
               onClick={handleLogout}
-              className="inline-flex text-center items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-md font-medium"
+              className="inline-flex text-center items-center bg-gray-200 border-0 py-1 pl-1 pr-3 focus:outline-none hover:bg-gray-300 rounded text-md font-medium"
             >
+              <BiLogOut className="text-2xl mr-1" />
               Logout
             </button>
           )}

@@ -20,15 +20,15 @@ const Notes = () => {
   }, [])
 
   return (
-    <div className="flex flex-col text-center w-full">
+    <div className="flex flex-col w-full">
       <AddNote />
       <Update />
-      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-8 text-gray-900">
         Your Notes
       </h1>
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-10 mx-auto">
-          <div className="flex flex-wrap justify-center -m-4">
+        <div className="container">
+          <div className="flex flex-wrap gap-4">
             {
               notes.length === 0 ? 'No notes to display. Try adding some notes.' :
               notes.map((note, index) => { return <NoteItem note={note} key={note._id} /> })
