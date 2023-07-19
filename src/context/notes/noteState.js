@@ -7,7 +7,6 @@ const NoteState = (props) => {
   const [notes, setNotes] = useState(notesInitial);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [name, setName] = useState("");
 
   const [note, setNote] = useState({
     id: "",
@@ -90,10 +89,6 @@ const NoteState = (props) => {
     });
   };
 
-  const setUserName = (name) => {
-    setName(name);
-  };
-
   return (
     <NoteContext.Provider
       value={{
@@ -108,9 +103,7 @@ const NoteState = (props) => {
         addModalOpen,
         setAddModalOpen,
         updateModalOpen,
-        setUpdateModalOpen,
-        setUserName,
-        name,
+        setUpdateModalOpen
       }}
     >
       {props.children}
