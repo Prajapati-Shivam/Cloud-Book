@@ -3,14 +3,16 @@ import { useNavigate, Link } from "react-router-dom";
 import login from "../asset/loginGif.gif";
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const host = "https://lively-puce-flip-flops.cyclic.app";
     let url = `${host}/api/auth/login`;
 
     try {
+      setLoading(true);
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -22,20 +24,22 @@ const Login = () => {
         }),
       });
 
-      if (!response.ok) {
-        // Handle the error if the response is not successful
-        throw new Error("Request failed with status " + response.status);
-      }
-
       const data = await response.json();
 
       if (data.success) {
         localStorage.setItem("token", data.authtoken);
         navigate("/", { replace: true });
+      } else {
+        setError(data.error);
+        setTimeout(() => {
+          setError("");
+        }, 5000);
       }
     } catch (error) {
-      setError("Invalid Credentials");
-      console.error("Error:", error.message);
+      setError("Something went wrong");
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,7 +108,7 @@ const Login = () => {
           </div>
           <div className="w-full mt-4">
             <button className="flex text-black mx-auto border border-black py-1 px-3 focus:outline-none hover:bg-black hover:text-white rounded-md text-lg font-semibold transition-colors duration-300">
-              Submit
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>

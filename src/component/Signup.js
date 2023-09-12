@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import signupGif from "../asset/signupGif.gif";
 const Signup = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -11,8 +13,10 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { name, email, password } = credentials;
     const host = "https://lively-puce-flip-flops.cyclic.app";
+    // const host = "http://localhost:5000";
     let url = `${host}/api/auth/createuser`;
 
     try {
@@ -24,21 +28,20 @@ const Signup = () => {
         body: JSON.stringify({ name, email, password }),
       });
 
-      if (!response.ok) {
-        // Handle the error if the response is not successful
-        throw new Error("Request failed with status " + response.status);
-      }
-
       const data = await response.json();
-
       if (data.success) {
         localStorage.setItem("token", data.authtoken);
         navigate("/", { replace: true });
       } else {
-        throw new Error(data.error);
+        setError(data.error);
+        setTimeout(() => {
+          setError("");
+        }, 5000);
       }
     } catch (error) {
-      console.error("Error:", error.message);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,6 +64,7 @@ const Signup = () => {
             Create an account to start saving your notes.
           </p>
         </div>
+        {error && <div className="text-red-500 mb-2">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="w-full mb-2 sm:mb-4">
             <div className="relative">
@@ -128,7 +132,7 @@ const Signup = () => {
 
           <div className="w-full mt-4">
             <button className="flex text-black mx-auto border border-black py-1 px-3 focus:outline-none hover:bg-black hover:text-white rounded-md text-lg font-semibold transition-colors duration-300">
-              Submit
+              {loading ? "Signing up..." : "Sign Up"}
             </button>
           </div>
         </form>
