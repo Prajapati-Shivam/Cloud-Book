@@ -1,28 +1,28 @@
-import { useState } from "react";
-import NoteContext from "./noteContext";
+import { useState } from 'react';
+import NoteContext from './noteContext';
 
 const NoteState = (props) => {
-  const host = "https://lively-puce-flip-flops.cyclic.app";
+  const host = 'https://cloud-book.onrender.com';
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
   const [note, setNote] = useState({
-    id: "",
-    etitle: "",
-    edescription: "",
-    etag: "Personal",
+    id: '',
+    etitle: '',
+    edescription: '',
+    etag: 'Personal',
   });
 
   // Get all note
   const getNotes = async () => {
     let url = `${host}/api/notes/fetchallnotes`;
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -33,10 +33,10 @@ const NoteState = (props) => {
   const addNote = async (title, description, tag) => {
     let url = `${host}/api/notes/createnote`;
     const response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('token'),
       },
       body: JSON.stringify({ title, description, tag }),
     });
@@ -48,10 +48,10 @@ const NoteState = (props) => {
   const updateNote = async (id, title, description, tag) => {
     let url = `${host}/api/notes/updatenote/${id}`;
     const response = await fetch(url, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('token'),
       },
       body: JSON.stringify({ title, description, tag }),
     });
@@ -68,10 +68,10 @@ const NoteState = (props) => {
   const deleteNote = async (id) => {
     let url = `${host}/api/notes/deletenote/${id}`;
     const response = await fetch(url, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -103,7 +103,7 @@ const NoteState = (props) => {
         addModalOpen,
         setAddModalOpen,
         updateModalOpen,
-        setUpdateModalOpen
+        setUpdateModalOpen,
       }}
     >
       {props.children}
